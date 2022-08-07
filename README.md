@@ -3,7 +3,7 @@ cgroupy is a python module that provides a simple intrface for managing cgroups
 
 # Usage
 ```
->>> from horae import cgroup
+>>> from cgroupy import cgroup
 >>> c = cgroup(1000,1000,'test')
 >>> c.setup()
 >>> c.execute('sleep 100', join=False)
