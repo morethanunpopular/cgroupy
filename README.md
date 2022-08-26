@@ -25,8 +25,10 @@ pip install cgroupy
 `with` syntax is also supported for automated setup and teardown:
 
 ```
+>>> from cgroupy import cgroup
 >>> with cgroup(1000,1000,'test') as c:
-...   c.execute('echo hello world')
+...    process = c.execute('echo hello world')
+...    print(process.communicate())
 ... 
-hello world
+(b'hello world\n', b'')
 ```
