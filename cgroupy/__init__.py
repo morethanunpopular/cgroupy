@@ -1,9 +1,11 @@
 import os
 import sys
+import time
 import uuid
 import shutil
+import logging
 import subprocess
-import time
+
 
 class cgroup(object):
 
@@ -13,24 +15,30 @@ class cgroup(object):
   """
   def __init__(self, cpu, memory, name):
 
+    self.logger = logging.getLogger('cgroupy')
     self.cpu = cpu
     self.memory = memory * 1024 * 1024
     self.name = name
+    self.logger.debug("Memory Limit: {}".format(self.memory))
+    self.logger.debug("CPU Limit: {}".format(self.cpu))
+    self.logger.debug("CGroup Name: {}".format(self.name))
     self.cgroup_root = os.environ.get('CGROUP_ROOT')
     if not self.cgroup_root:
         self.cgroup_root = 'cgroupy'
+    self.logger.debug("CGroup root path: {}".format(self.cgroup_root))
     self.cpu_path = "/sys/fs/cgroup/cpu/{}/{}".format(self.cgroup_root, self.name)
     self.memory_path = "/sys/fs/cgroup/memory/{}/{}".format(self.cgroup_root, self.name)
 
   def setup(self):
     # Check if cgroup already exists or not
     if not self.exists:
+      self.logger.info("Creating cgroup at paths: /sys/fs/(cpu,memory)/{}/{}...".format(self.cgroup_root, self.name))
       # Set up cgroup
       os.makedirs(self.cpu_path)
+      self.logger.info("Writing CPU Limit of {}  to: {}...".format(self.cpu, self.cpu_path))
       with open("{}/cpu.shares".format(self.cpu_path), 'w+')  as fh:
         fh.write(str(self.cpu))
-
-      print("{}/memory.limit_in_bytes".format(self.memory_path))
+      self.logger.info("Writing memory Limit of {} to: {}...".format(self.memory, self.memory_path))
       os.makedirs(str(self.memory_path))
       with open("{}/memory.limit_in_bytes".format(self.memory_path), 'w')  as fh:
         fh.truncate()
@@ -61,7 +69,7 @@ class cgroup(object):
     self.teardown()
 
   def teardown(self):
-    print("Performing Teardown...")
+    self.logger.info("Performing Teardown...")
     os.rmdir(self.cpu_path)
     os.rmdir(self.memory_path)
 
