@@ -16,8 +16,11 @@ class cgroup(object):
     self.cpu = cpu
     self.memory = memory * 1024 * 1024
     self.name = name
-    self.cpu_path = "/sys/fs/cgroup/cpu/Horae/{}".format(self.name)
-    self.memory_path = "/sys/fs/cgroup/memory/Horae/{}".format(self.name)
+    self.cgroup_root = os.environ.get('CGROUP_ROOT')
+    if not self.cgroup_root:
+        self.cgroup_root = 'cgroupy'
+    self.cpu_path = "/sys/fs/cgroup/cpu/{}/{}".format(self.cgroup_root, self.name)
+    self.memory_path = "/sys/fs/cgroup/memory/{}/{}".format(self.cgroup_root, self.name)
 
   def setup(self):
     # Check if cgroup already exists or not
