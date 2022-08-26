@@ -1,6 +1,13 @@
 # cgroupy
 cgroupy is a python module that provides a simple intrface for managing cgroups
 
+# Installation
+You can install `cgroupy` using pip:
+
+```
+pip install cgroupy
+```
+
 # Usage
 ```
 >>> from cgroupy import cgroup

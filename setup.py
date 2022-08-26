@@ -4,7 +4,7 @@ import setuptools
 PACKAGE_NAME = "cgroupy"
 setuptools.setup(
     name=PACKAGE_NAME,
-    version='0.0.1',
+    version='0.0.3',
     description="cgroupy is a python module that provides a simple intrface for managing cgroups",
     url="https://github.com/morethanunpopular/cgroupy",
     author="Grant Campbell",
