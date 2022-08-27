@@ -54,6 +54,6 @@ IN addition to the `cgroup.execute` method that lets you run an arbitrary comman
 ```
 >>> with cgroup('test', memory=1000, cpu=500) as c:
 ...   c.execute('echo hello world')
-... 
-hello world
+ 
+(b'hello world\n', b'')
 ```
