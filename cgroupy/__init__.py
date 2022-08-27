@@ -13,7 +13,7 @@ class cgroup(object):
   simple implementation of a cgroup. support creating a cgroup with memory 
   and cpu limits, and the running processes inside of that cgroup
   """
-  def __init__(self, cpu=200, memory=512, name):
+  def __init__(self, name, cpu=200, memory=512):
 
     self.logger = logging.getLogger('cgroupy')
     self.cpu = cpu
