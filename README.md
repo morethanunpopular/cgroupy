@@ -52,7 +52,7 @@ IN addition to the `cgroup.execute` method that lets you run an arbitrary comman
 `with` syntax is also supported for automated setup and teardown:
 
 ```
->>> with cgroup(1000,1000,'test') as c:
+>>> with cgroup('test', memory=1000, cpu=500) as c:
 ...   c.execute('echo hello world')
 ... 
 hello world
